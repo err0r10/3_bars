@@ -9,24 +9,24 @@ def load_data(filepath):
         return bars.read()
 
 
-def get_biggest_bar(data):
-    max_seatscount = max([bar["seatscount"] for bar in data])
+def get_biggest_bar(bars):
+    max_seatscount = max([bar["seatscount"] for bar in bars])
     return [
-        bar for bar in data if bar["seatscount"] == max_seatscount
+        bar for bar in bars if bar["seatscount"] == max_seatscount
     ]
 
 
-def get_smallest_bar(data):
-    min_seatscount = min([bar["seatscount"] for bar in data])
+def get_smallest_bar(bars):
+    min_seatscount = min([bar["seatscount"] for bar in bars])
     return [
-        bar for bar in data if bar["seatscount"] == min_seatscount
+        bar for bar in bars if bar["seatscount"] == min_seatscount
     ]
 
 
-def get_closest_bar(data, longitude, latitude):
+def get_closest_bar(bars, longitude, latitude):
     array = np.array(
         [
-            coordinates["coordinates"] for coordinates in data
+            bar["coordinates"] for bar in bars
         ]
     )
     idx = np.array(
@@ -35,11 +35,11 @@ def get_closest_bar(data, longitude, latitude):
             for (x, y) in array - [longitude, latitude]
         ]
     ).argmin()
-    return data[idx]
+    return bars[idx]
 
 
-def print_max_bar(data):
-    for bar in data:
+def print_max_bar(bars):
+    for bar in bars:
         print(
             "Max name bar = {0}, SeatsCount = {1}".format(
                 bar["name"],
@@ -48,8 +48,8 @@ def print_max_bar(data):
         )
 
 
-def print_min_bar(data):
-    for bar in data:
+def print_min_bar(bars):
+    for bar in bars:
         print(
             "Min name bar = {0}, SeatsCount = {1}".format(
                 bar["name"],
@@ -58,9 +58,9 @@ def print_min_bar(data):
         )
 
 
-def print_closest_bar(data):
+def print_closest_bar(bar):
     print(
-        "Closets name bar = {0}".format(data["name"])
+        "Closets name bar = {0}".format(bar["name"])
     )
 
 
