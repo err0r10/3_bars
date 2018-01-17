@@ -7,7 +7,10 @@
 Скрипт требует для своей работы установленного интерпретатора Python версии 3.5
 
 Запуск на Linux:
-
+1. Зарегистрироваться на сайте и получить API;
+2. Скачать файл по ссылке вида https://apidata.mos.ru/v1/features/1796?api_key={place_your_API_key_here}
+3. Переложить файл в ./3_bars
+4. Выполнить
 ```bash
 $ python bars.py bars.json                    # possibly requires call of python3 executive instead of just python
 # Example:
