@@ -16,9 +16,6 @@ $ python bars.py bars.json                    # possibly requires call of python
 # Example:
 Max name bar = Спорт бар «Красная машина», SeatsCount = 450
 Min name bar = БАР. СОКИ, SeatsCount = 0
-Min name bar = Соки, SeatsCount = 0
-Min name bar = Фреш-бар, SeatsCount = 0
-Min name bar = Бар в Деловом центре Яуза, SeatsCount = 0
 Input our longitude: >> 37.502865
 Input our latitude: >> 55.718002
 Closets name bar = БАР «Бинза»
