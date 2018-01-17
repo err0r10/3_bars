@@ -18,7 +18,7 @@ Max name bar = Спорт бар «Красная машина», SeatsCount = 4
 Min name bar = БАР. СОКИ, SeatsCount = 0
 Input our longitude: >> 37.502865
 Input our latitude: >> 55.718002
-Closets name bar = БАР «Бинза»
+Closets name bar = БАР «Бинза», SeatsCount = 75
 ```
 
 Запуск на Windows происходит аналогично.
