@@ -4,66 +4,62 @@ from os.path import exists
 
 
 def load_data(filepath):
-    with open(filepath) as bars:
-        return bars.read()
+    with open(filepath) as json_file:
+        return json_file.read()
 
 
 def get_biggest_bar(bars):
-    return [
-        max(bars, key=lambda bar: bar["seatscount"])
-    ]
+    return max(bars, key=lambda bar:
+        bar["properties"]["Attributes"]["SeatsCount"]
+    )
 
 
 def get_smallest_bar(bars):
-    return [
-        min(bars, key=lambda bar: bar["seatscount"])
-    ]
+    return min(bars, key=lambda bar:
+        bar["properties"]["Attributes"]["SeatsCount"]
+    )
 
 
 def get_closest_bar(bars, longitude, latitude):
     sum_coordinats = float(longitude) + float(latitude)
-    return [
-        min(bars, key=lambda bar:
+    return min(bars, key=lambda bar:
             abs(
-                sum(bar["coordinates"]) - sum_coordinats
+                sum(bar["geometry"]["coordinates"]) - sum_coordinats
             )
-        )
-    ]
+    )
 
 
-def print_info_bar(operation, bars):
-    for bar in bars:
+def print_info_bar(operation, bar):
         print(
             "{0} name bar = {1}, SeatsCount = {2}".format(
                 operation,
-                bar["name"],
-                bar["seatscount"]
+                bar["properties"]["Attributes"]["Name"],
+                bar["properties"]["Attributes"]["SeatsCount"]
             )
         )
+
+
+def input_coordinates(info):
+    coordinates = input(info)
+    try:
+        return float(coordinates)
+    except ValueError:
+        return None
 
 
 if __name__ == '__main__':
     if len(sys.argv) != 2 or not exists(sys.argv[1]):
-        print("The file doesn't exist!")
-        sys.exit(0)
+        sys.exit("The file doesn't exist!")
     file_path = sys.argv[1]
-    data_json = json.loads(load_data(file_path))["features"]
-    get_attributes_bars = [
-        {
-            "coordinates": bar["geometry"]["coordinates"],
-            "global_id": bar["properties"]["Attributes"]["global_id"],
-            "name": bar["properties"]["Attributes"]["Name"],
-            "seatscount": bar["properties"]["Attributes"]["SeatsCount"]
-        }
-        for bar in data_json
-    ]
-    biggest_bars = get_biggest_bar(get_attributes_bars)
-    smallest_bars = get_smallest_bar(get_attributes_bars)
+    bars = json.loads(load_data(file_path))["features"]
+    biggest_bars = get_biggest_bar(bars)
+    smallest_bars = get_smallest_bar(bars)
     print_info_bar("Max", biggest_bars)
     print_info_bar("Min", smallest_bars)
-    longitude = input("Input our longitude: >> ")
-    latitude = input("Input our latitude: >> ")
-    our_closest_bar = get_closest_bar(
-        get_attributes_bars, longitude, latitude
-    )
-    print_info_bar("Closets", our_closest_bar)
+    longitude = input_coordinates("Input our longitude: >> ")
+    latitude = input_coordinates("Input our latitude: >> ")
+    if longitude and latitude:
+        our_closest_bar = get_closest_bar(bars, longitude, latitude)
+        print_info_bar("Closest", our_closest_bar)
+    else:
+        print("Bad coordinates")
