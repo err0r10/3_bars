@@ -5,12 +5,13 @@ from os.path import exists
 
 def load_data(filepath):
     with open(filepath) as json_file:
-        return json_file.read()
+        return json.loads(json_file.read())
 
 
 def get_biggest_bar(bars):
-    return max(bars, key=lambda bar:
-        bar["properties"]["Attributes"]["SeatsCount"]
+    return max(
+        bars,
+        key=lambda bar: bar["properties"]["Attributes"]["SeatsCount"]
     )
 
 
@@ -21,7 +22,7 @@ def get_smallest_bar(bars):
 
 
 def get_closest_bar(bars, longitude, latitude):
-    sum_coordinats = float(longitude) + float(latitude)
+    sum_coordinats = longitude + latitude
     return min(bars, key=lambda bar:
             abs(
                 sum(bar["geometry"]["coordinates"]) - sum_coordinats
@@ -39,10 +40,10 @@ def print_info_bar(operation, bar):
     )
 
 
-def input_coordinates(user_number):
-    coordinates = input(user_number)
+def input_coordinates(command_line):
+    coordinate = input(command_line)
     try:
-        return float(coordinates)
+        return float(coordinate)
     except ValueError:
         return None
 
@@ -51,7 +52,7 @@ if __name__ == '__main__':
     if len(sys.argv) != 2 or not exists(sys.argv[1]):
         sys.exit("The file doesn't exist!")
     file_path = sys.argv[1]
-    bars = json.loads(load_data(file_path))["features"]
+    bars = load_data(file_path)["features"]
     biggest_bars = get_biggest_bar(bars)
     smallest_bars = get_smallest_bar(bars)
     print_info_bar("Max", biggest_bars)
