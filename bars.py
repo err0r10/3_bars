@@ -30,17 +30,17 @@ def get_closest_bar(bars, longitude, latitude):
 
 
 def print_info_bar(operation, bar):
-        print(
-            "{0} name bar = {1}, SeatsCount = {2}".format(
-                operation,
-                bar["properties"]["Attributes"]["Name"],
-                bar["properties"]["Attributes"]["SeatsCount"]
-            )
+    print(
+        "{0} name bar = {1}, SeatsCount = {2}".format(
+            operation,
+            bar["properties"]["Attributes"]["Name"],
+            bar["properties"]["Attributes"]["SeatsCount"]
         )
+    )
 
 
-def input_coordinates(info):
-    coordinates = input(info)
+def input_coordinates(user_number):
+    coordinates = input(user_number)
     try:
         return float(coordinates)
     except ValueError:
