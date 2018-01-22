@@ -16,17 +16,17 @@ def get_biggest_bar(bars):
 
 
 def get_smallest_bar(bars):
-    return min(bars, key=lambda bar:
-        bar["properties"]["Attributes"]["SeatsCount"]
+    return min(
+        bars, 
+        key=lambda bar: bar["properties"]["Attributes"]["SeatsCount"]
     )
 
 
 def get_closest_bar(bars, longitude, latitude):
     sum_coordinats = longitude + latitude
-    return min(bars, key=lambda bar:
-            abs(
-                sum(bar["geometry"]["coordinates"]) - sum_coordinats
-            )
+    return min(
+        bars, 
+        key=lambda bar: abs(sum(bar["geometry"]["coordinates"]) - sum_coordinats)
     )
 
 
@@ -40,7 +40,7 @@ def print_info_bar(operation, bar):
     )
 
 
-def input_coordinates(command_line):
+def check_input(command_line):
     coordinate = input(command_line)
     try:
         return float(coordinate)
